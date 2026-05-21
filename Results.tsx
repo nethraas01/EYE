@@ -1246,14 +1246,6 @@ const Results: React.FC = () => {
                                 <div className="text-xs text-slate-500">Saccade Count</div>
                                 <div className="font-bold text-slate-800">{currentImg.metrics.saccadeCount ?? 0}</div>
                             </div>
-							<div className="flex justify-between items-center p-3 bg-yellow-50 rounded-x1 border-yellow-100">
-							    <div className-"text-xs text-yellow-700 font-semibold">
-								Blink Rate
-								</div>
-								<div className="font=bold text-yellow-800">
-								    {currentImg.metrics.blinkrate||0}blinks/min
-								</div>
-							</div>	
                             <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
                                 <div className="text-xs text-slate-500">Avg Saccade Velocity</div>
                                 <div className="font-bold text-slate-800">{(currentImg.metrics.avgSaccadeVelocity || 0).toFixed(2)} px/ms</div>

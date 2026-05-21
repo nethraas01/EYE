@@ -23,15 +23,12 @@ const Study: React.FC = () => {
   const [images, setImages] = useState<StudyImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [blinkCount,setBlinkCount]=useState(0);
-  const [blinkRate,setBlinkRate] = useStste(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const resultsRef = useRef<ImageSessionData[]>([]);
   const startTimeRef = useRef<number>(0);
-  const blinkTimes = useRef<number[]>([]);
 
   // Modal State
   const [modalConfig, setModalConfig] = useState<{
@@ -121,9 +118,6 @@ const Study: React.FC = () => {
   // 3. Timer Decrement Effect
   useEffect(() => {
     if (!isPlaying || isBreak || isLoading) return;
-	const blinkInterval = setInterval(() =>{
-		detectBlink();
-	},5000);
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -143,14 +137,7 @@ const Study: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, isPlaying, isBreak, isLoading]); 
-const detectBlink = () => {
-	
-	const now = Date.now();
-	setBlinkCount(prev => prev +1);
-	blinkTimes.current.push(now);
-	blinkTimes.current=blinkTimes.current.filter(t =>now - t<60000);
-	setBlinkRate(blinkTimes.current.length);
-};
+
   const finishImage = () => {
     // Stop recording immediately
     const logs = stopRecording();
@@ -253,8 +240,6 @@ const detectBlink = () => {
       metrics: {
         avgFixationDuration,
         saccadeCount: saccades.length,
-		blinkRate,
-		blinkCount,
         pursuitCount: detectPursuits(logs, fixations),
         bcea: calculateBCEA(logs),
         scanPathLength: totalPathLength,
